@@ -1,38 +1,77 @@
-alumnos= {"nombre": "",
-        "edad": "",
-        "materias aprobadas": ""}
+estudiantes = {
+"Juan Pérez": {"edad": 17, "materias": ["Matemáticas", "Física"]},
 
-print("Bienvenido al Menú")
-print("Elija una opcion")
-opcion= int(input("1= agregar alumno - 2= mostrar la lista - 3= eliminar un estudiante - 4= buscar un estudiante - 5= verificar una palabra clave"))
-match opcion:
-    case 1:
-        alumnos["nombre"]=input(print("ingrese el nombre del alumno"))
-        alumnos["edad"]=int(input(print("ingrese la edad del alumno")))
-        alumnos["materias aprobadas"]=input(print("ingrese las materias aprobadas"))
-        opcion= int(input("1= agregar alumno - 2= mostrar la lista - 3= eliminar un estudiante - 4= buscar un estudiante - 5= verificar una palabra clave"))
+    "Ana Gómez": {"edad": 16, "materias": ["Química", "Historia"]},
 
-    case 2:
-        print(alumnos)
-        opcion= int(input("1= agregar alumno - 2= mostrar la lista - 3= eliminar un estudiante - 4= buscar un estudiante - 5= verificar una palabra clave"))
+    "Pedro López": {"edad": 18, "materias": ["Biología", "Inglés"]}
+}
 
-    case 3:
-        del alumnos
-        opcion= int(input("1= agregar alumno - 2= mostrar la lista - 3= eliminar un estudiante - 4= buscar un estudiante - 5= verificar una palabra clave"))
 
-    case 4:
-        nombre=input(print("ingrese el nombre del alumno que busca"))
-        if nombre in alumnos:
-            print(alumnos[nombre])
-        opcion= int(input("1= agregar alumno - 2= mostrar la lista - 3= eliminar un estudiante - 4= buscar un estudiante - 5= verificar una palabra clave"))
+def agregar_estudiante():
+    nombre = input("Nombre del estudiante: ")
+    edad = int(input("Edad del estudiante: "))
+    materias = input("Materias aprobadas (separadas por coma): ").split(", ")
+    estudiantes[nombre] = {"edad": edad, "materias": materias}
+    print(f"Estudiante {nombre} agregado exitosamente.")
 
-    case 5:
-        palabra= input(print("ingrese la palabra que desea buscar"))
-        if palabra in alumnos:
-            print(alumnos[palabra])
-        opcion= int(input("1= agregar alumno - 2= mostrar la lista - 3= eliminar un estudiante - 4= buscar un estudiante - 5= verificar una palabra clave"))
+def mostrar_estudiantes():
+    if not estudiantes:
+        print("No hay estudiantes registrados.")
+    else:
+        for nombre, datos in estudiantes.items():
+            print(f"Nombre: {nombre}, Edad: {datos['edad']}, Materias: {', '.join(datos['materias'])}")
 
-    case _: 
-        print("seleccione una opcion posible")
-        opcion= int(input("1= agregar alumno - 2= mostrar la lista - 3= eliminar un estudiante - 4= buscar un estudiante - 5= verificar una palabra clave"))
+def eliminar_estudiante():
+    nombre = input("Ingrese el nombre del estudiante a eliminar: ")
+    if nombre in estudiantes:
+        del estudiantes[nombre]
+        print(f"Estudiante {nombre} eliminado.")
+    else:
+        print("El estudiante no existe en la lista.")
 
+def buscar_estudiante():
+    nombre = input("Ingrese el nombre del estudiante a buscar: ")
+    if nombre in estudiantes:
+        datos = estudiantes[nombre]
+        print(f"Nombre: {nombre}, Edad: {datos['edad']}, Materias: {', '.join(datos['materias'])}")
+    else:
+        print("Estudiante no encontrado.")
+
+def buscar_por_palabra():
+    palabra = input("Ingrese la palabra clave: ").lower()
+    encontrados = [nombre for nombre in estudiantes if palabra in nombre.lower()]
+    if encontrados:
+        print("Estudiantes encontrados:")
+        for nombre in encontrados:
+            print(f"- {nombre}")
+    else:
+        print("No se encontraron coincidencias.")
+
+def menu():
+    while True:
+        print("\nMenú:")
+        print("1. Agregar estudiante")
+        print("2. Mostrar estudiantes")
+        print("3. Eliminar estudiante")
+        print("4. Buscar estudiante")
+        print("5. Buscar por palabra clave")
+        print("6. Salir")
+        opcion = input("Seleccione una opción: ")
+
+        match opcion:
+            case "1":
+                agregar_estudiante()
+            case "2":
+                mostrar_estudiantes()
+            case "3":
+                eliminar_estudiante()
+            case "4":
+                buscar_estudiante()
+            case "5":
+                buscar_por_palabra()
+            case "6":
+                print("Saliendo del programa...")
+                break
+            case _:
+                    print("Opción no válida, intente de nuevo.")
+menu()
